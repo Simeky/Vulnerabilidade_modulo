@@ -76,6 +76,8 @@ public class FuncionarioController {
   repositorio.deleteById(funcionario_id);
   return ResponseEntity.noContent().build();
   }
+  
+  //auth
 
   @PostMapping("login")
   public ResponseEntity<FuncionarioResponseDTO> login(@RequestBody FuncionarioCompactDTO data) {
