@@ -1,13 +1,11 @@
 package com.vulnerabilidade.controllers;
 
 import com.vulnerabilidade.repositorios.FamiliaRepositorio;
-
 import com.vulnerabilidade.DTOS.request.FamiliaRequestDTO;
 import com.vulnerabilidade.DTOS.response.FamiliaResponseDTO;
 import com.vulnerabilidade.classes.Familia;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,11 +26,11 @@ public class FamiliaController {
 
   //Create
   @PostMapping
-  public void cadastro_familia(@RequestBody FamiliaRequestDTO data){
+  public Familia cadastro_familia(@RequestBody FamiliaRequestDTO data){
 
     Familia familia_dados = new Familia(data);
-    repositorio.save(familia_dados);
-    return;
+    return repositorio.save(familia_dados);
+    
 
   }  
 

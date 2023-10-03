@@ -26,11 +26,11 @@ public class RelatorioController {
 
   //Create
   @PostMapping
-  public void criar_relatorio(@RequestBody RelatorioRequestDTO data){
+  public Relatorio criar_relatorio(@RequestBody RelatorioRequestDTO data){
 
     Relatorio relatorio_dados = new Relatorio(data);
-    repositorio.save(relatorio_dados);
-    return;
+    return repositorio.save(relatorio_dados);
+    
 
   }
 
