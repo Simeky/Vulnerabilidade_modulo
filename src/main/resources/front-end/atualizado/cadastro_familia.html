@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro_familia.css">
+    <script src="cadastro_familia.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="cadastro">
+        <form id="familia_form" method="post" action=""> 
+          <h1>Cadastro de familia</h1> 
+          <label for="familia_id"></label> 
+
+            <br> 
+
+            <label for="familia_nome_responsavel1">Nome(s):</label>
+            <input id="familia_nome_responsavel1" name="familia_nome_responsavel1" required="required" type="text" placeholder="Primeiro Responsavel familia" />
+            <input id="familia_nome_responsavel2" name="familia_nome_responsavel2" type="text" placeholder="Segundo Responsavel familia" /> 
+            
+            <br> 
+            <br>
+
+            <label for="nome_cad">CPF(s):</label>
+            <input id="familia_cpf_responsavel1" name="familia_cpf_responsavel1" required="required" type="text" placeholder="Digite o CPF do primeiro Responsavel."/>
+            <input id="familia_cpf_responsavel2" name="familia_cpf_responsavel2" type="text" placeholder="Digite o CPF do segundo Responsavel."/>
+
+            <br>
+            <br>
+            
+            <label for="nome_cad">Quantidade de filhos:</label>
+            <input id="familia_qtd_filhos" name="familia_qtd_filhos" required="required" type="number" placeholder="QUANTIDADE DE FILHOS" />
+
+            <br>
+            <br>
+
+            <label for="nome_cad">Número de telefone:</label>
+            <input id="familia_contato" name="familia_contato" required="required" type="text" placeholder="DIGITE SEU TELEFONE" maxlength="15"/>
+            
+            <br>  
+            <br>
+
+            <input type="submit" value="Cadastrar"/> 
+            
+            <br>
+
+        </form>
+      </div>
+</body>
+</html>
