@@ -78,7 +78,6 @@ public class FuncionarioController {
   }
   
   //auth
-
   @PostMapping("login")
   public ResponseEntity<FuncionarioResponseDTO> login(@RequestBody FuncionarioCompactDTO data) {
     Optional<Funcionario> funcionario_optional = repositorio.findByFuncionario_email(data.funcionario_email());
