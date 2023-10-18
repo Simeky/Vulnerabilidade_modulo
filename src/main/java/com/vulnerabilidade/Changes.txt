@@ -53,7 +53,28 @@
 |        and PessoaRepositorio;                                              |
 |        Delete of ResponseDTO files in DTOS folder;                         |
 |        Changes in aplication.properties file;                              | 
----------------------------------             --------------------------------
+---------------------------------  Committed  --------------------------------
+
+--------------------------------- 10/10/2023  --------------------------------
+|        Changes cadastro_familia.html file;                                 |
+|        Add of cadastro_familia.js file in front_end folder;                |
+|        Changes in controllers file of funcionario, familia, relatorio;     |
+|        Changes in FuncionarioRepositorio;                                  |
+|        Add of compact folder in DTOS folder;                               |
+|        Add of FuncionarioCompactDTO.java in DTOS/compact folder;           |
+|        Changes in Login.html and Login.js;                                 |
+|        Add of relatorio.js file in front_end folder;                       |
+--------------------------------- Committed   --------------------------------
+
+--------------------------------- 10/16/2023  --------------------------------
+|        Changes in Relatorio, familia files;                                |
+|        Changes in FuncionarioRepositorio, FuncionarioController;           |
+|        Changes in V001__create-tables file;                                |
+|        Changes in cadastro_familia.js/.html;                               |
+|                                                                            |
+--------------------------------- Committed   --------------------------------
+
+
 
 note: commands related to db use anottation @transactional - 
 .     it rollsback in case a error/exception occurs

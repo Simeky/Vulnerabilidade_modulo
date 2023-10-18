@@ -1,6 +1,5 @@
 package com.vulnerabilidade.controllers;
 
-import com.vulnerabilidade.DTOS.compact.FuncionarioCompactDTO;
 import com.vulnerabilidade.DTOS.request.FuncionarioRequestDTO;
 import com.vulnerabilidade.DTOS.response.FuncionarioResponseDTO;
 import com.vulnerabilidade.classes.Funcionario;
@@ -8,7 +7,6 @@ import com.vulnerabilidade.repositorios.FuncionarioRepositorio;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,23 +73,6 @@ public class FuncionarioController {
   
   repositorio.deleteById(funcionario_id);
   return ResponseEntity.noContent().build();
-  }
-  
-  //auth
-  @PostMapping("login")
-  public ResponseEntity<FuncionarioResponseDTO> login(@RequestBody FuncionarioCompactDTO data) {
-    Optional<Funcionario> funcionario_optional = repositorio.findByFuncionario_email(data.funcionario_email());
-
-    if (funcionario_optional.isPresent()) {
-        Funcionario funcionario = funcionario_optional.get();
-
-        if (funcionario.getFuncionario_senha().equals(data.funcionario_senha())) {
-            FuncionarioResponseDTO responseDTO = new FuncionarioResponseDTO(funcionario);
-            return ResponseEntity.ok(responseDTO);
-        }
-    }
-    
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
   }
 
 }

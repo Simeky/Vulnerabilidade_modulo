@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -39,8 +38,6 @@ public class Familia {
     @OneToMany(mappedBy = "pessoa_familia_id")
     private List<Pessoa> pessoas;
 
-    @OneToOne(mappedBy = "relatorio_familia_id")
-    private Relatorio relatorio;
 
     @OneToMany(mappedBy = "apoio_familia_id")
     private List<Apoio> apoios;
@@ -48,7 +45,7 @@ public class Familia {
     public Familia(FamiliaRequestDTO data) {
 
         familia_nome_responsavel1 = data.familia_nome_responsavel1();
-        familia_cpf_responsavel2 = data.familia_nome_responsavel2();
+        familia_nome_responsavel2 = data.familia_nome_responsavel2();
         familia_cpf_responsavel1 = data.familia_cpf_responsavel1();
         familia_cpf_responsavel2 = data.familia_cpf_responsavel2();
         familia_qtd_filhos = data.familia_qtd_filhos();

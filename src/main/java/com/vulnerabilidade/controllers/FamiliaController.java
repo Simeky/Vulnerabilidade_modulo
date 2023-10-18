@@ -25,7 +25,7 @@ public class FamiliaController {
   private FamiliaRepositorio repositorio;
 
   //Create
-  @PostMapping
+  @PostMapping("Add_familia")
   public Familia cadastro_familia(@RequestBody FamiliaRequestDTO data){
 
     Familia familia_dados = new Familia(data);
@@ -35,7 +35,7 @@ public class FamiliaController {
   }  
 
   //Read
-  @GetMapping
+  @GetMapping("familias")
   public List<FamiliaResponseDTO> getAll(){
 
     List<FamiliaResponseDTO> familia_list = repositorio.findAll().stream().map(FamiliaResponseDTO::new).toList();
@@ -44,7 +44,7 @@ public class FamiliaController {
   }
   
   //Update
-  @PutMapping("/{familia_id}")
+  @PutMapping("/update_{familia_id}")
   public ResponseEntity<FamiliaResponseDTO> update_familia(@PathVariable Long familia_id, @RequestBody FamiliaRequestDTO data) {
 
     Optional<Familia> familia_optional = repositorio.findById(familia_id);
@@ -65,13 +65,13 @@ public class FamiliaController {
   }
 
   //Delete
-  @DeleteMapping("/{familia_id}")
+  @DeleteMapping("/delete_{familia_id}")
   public ResponseEntity<Void> delete_familia(@PathVariable Long familia_id) {
 
-  Optional<Familia> familia_optional = repositorio.findById(familia_id);
-  if (familia_optional.isEmpty()) {
-    return ResponseEntity.notFound().build();
-  }
+    Optional<Familia> familia_optional = repositorio.findById(familia_id);
+    if (familia_optional.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    }
 
   repositorio.deleteById(familia_id);
   return ResponseEntity.noContent().build();

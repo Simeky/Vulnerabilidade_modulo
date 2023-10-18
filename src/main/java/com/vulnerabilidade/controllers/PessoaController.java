@@ -2,7 +2,6 @@ package com.vulnerabilidade.controllers;
 
 import com.vulnerabilidade.DTOS.response.PessoaResponseDTO;
 import com.vulnerabilidade.repositorios.PessoaRepositorio;
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -25,7 +25,7 @@ public class RelatorioController {
   private RelatorioRepositorio repositorio;
 
   //Create
-  @PostMapping
+  @PostMapping("Add_relatorio")
   public Relatorio criar_relatorio(@RequestBody RelatorioRequestDTO data){
 
     Relatorio relatorio_dados = new Relatorio(data);
@@ -35,7 +35,7 @@ public class RelatorioController {
   }
 
   //Read
-  @GetMapping
+  @GetMapping("relatorios")
   public List<RelatorioResponseDTO> getAll(){
 
     List<RelatorioResponseDTO> relatorio_list = repositorio.findAll().stream().map(RelatorioResponseDTO::new).toList();
@@ -53,13 +53,14 @@ public class RelatorioController {
     }
 
     Relatorio relatorio = relatorio_optional.get();
+    
     relatorio.setRelatorio_necessidades(data.relatorio_necessidades());
     relatorio.setRelatorio_renda(data.relatorio_renda());
     relatorio.setRelatorio_nivel_vulnerabilidade(data.relatorio_nivel_vulnerabilidade());
     relatorio.setRelatorio_data(data.relatorio_data());
-    relatorio.setRelatorio_familia_id(data.relatorio_familia_id());
     relatorio.setRelatorio_data_visita(data.relatorio_data_visita());
     RelatorioResponseDTO responseDTO = new RelatorioResponseDTO(relatorio);
+
     return ResponseEntity.ok(responseDTO);
   }
 

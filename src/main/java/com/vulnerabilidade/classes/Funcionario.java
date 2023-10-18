@@ -33,7 +33,8 @@ public class Funcionario {
   private String funcionario_senha;
 
   public Funcionario(FuncionarioRequestDTO data) {
-    
+
+    funcionario_id = data.funcionario_id();
     funcionario_nome = data.funcionario_nome();
     funcionario_email = data.funcionario_email();
     funcionario_cpf = data.funcionario_cpf();

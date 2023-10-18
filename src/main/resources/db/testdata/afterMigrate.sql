@@ -58,8 +58,8 @@ VALUES
 ('Maria Santos', 'maria@gmail.com', '987.654.321-09', '(21) 9876-5432', 'Atendente', 'senha456'),
 ('Carlos Oliveira', 'carlos@gmail.com', '456.789.123-45', '(31) 5555-5555', 'Desenvolvedor', 'senha789');
 
-INSERT INTO relatorio (relatorio_necessidades, relatorio_renda, relatorio_nivel_vulnerabilidade, relatorio_data, relatorio_familia_id, relatorio_data_visita)
+INSERT INTO relatorio (relatorio_id, relatorio_necessidades, relatorio_renda, relatorio_nivel_vulnerabilidade, relatorio_data, relatorio_data_visita)
 VALUES 
-('Necessidades do Relatório 1', 1500.00, 3, '2023-06-11', 1, null),
-('Necessidades do Relatório 2', 2500.00, 2, '2023-09-30', 2, '2023-11-17'),
-('Necessidades do Relatório 3', 1000.00, 1, '2023-08-04', 3, null);
+(1, 'Necessidades do Relatório 1', 1500.00, 3, '2023-06-11', null),
+(2, 'Necessidades do Relatório 2', 2500.00, 2, '2023-09-30', '2023-11-17'),
+(3, 'Necessidades do Relatório 3', 1000.00, 1, '2023-08-04', null);
