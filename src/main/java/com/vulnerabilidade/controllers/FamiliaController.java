@@ -1,6 +1,7 @@
 package com.vulnerabilidade.controllers;
 
 import com.vulnerabilidade.repositorios.FamiliaRepositorio;
+import jakarta.transaction.Transactional;
 import com.vulnerabilidade.DTOS.request.FamiliaRequestDTO;
 import com.vulnerabilidade.DTOS.response.FamiliaResponseDTO;
 import com.vulnerabilidade.classes.Familia;
@@ -26,6 +27,7 @@ public class FamiliaController {
 
   //Create
   @PostMapping("Add_familia")
+  @Transactional
   public Familia cadastro_familia(@RequestBody FamiliaRequestDTO data){
 
     Familia familia_dados = new Familia(data);
@@ -45,6 +47,7 @@ public class FamiliaController {
   
   //Update
   @PutMapping("/update_{familia_id}")
+  @Transactional
   public ResponseEntity<FamiliaResponseDTO> update_familia(@PathVariable Long familia_id, @RequestBody FamiliaRequestDTO data) {
 
     Optional<Familia> familia_optional = repositorio.findById(familia_id);
@@ -66,6 +69,7 @@ public class FamiliaController {
 
   //Delete
   @DeleteMapping("/delete_{familia_id}")
+  @Transactional
   public ResponseEntity<Void> delete_familia(@PathVariable Long familia_id) {
 
     Optional<Familia> familia_optional = repositorio.findById(familia_id);

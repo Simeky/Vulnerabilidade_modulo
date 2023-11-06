@@ -33,15 +33,15 @@ CREATE TABLE IF NOT EXISTS `pessoa` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `relatorio` (
-  `relatorio_id` INT NOT NULL,
+  `relatorio_familia_id` INT NOT NULL,
   `relatorio_necessidades` VARCHAR(45) NOT NULL,
   `relatorio_renda` FLOAT NOT NULL,
   `relatorio_nivel_vulnerabilidade` INT NOT NULL,
   `relatorio_data` DATE NOT NULL,
   `relatorio_data_visita` DATE,
-  PRIMARY KEY (`relatorio_id`),
+  PRIMARY KEY (`relatorio_familia_id`),
   CONSTRAINT `fk_familia_relatorio`
-    FOREIGN KEY (`relatorio_id`)
+    FOREIGN KEY (`relatorio_familia_id`)
     REFERENCES `familia` (`familia_id`))
 ENGINE = InnoDB;
 
@@ -50,12 +50,12 @@ CREATE TABLE IF NOT EXISTS `apoio` (
   `apoio_nome` VARCHAR(45) NOT NULL,
   `apoio_instituicao` VARCHAR(45) NOT NULL,
   `apoio_descricao` VARCHAR(500) NOT NULL,
-  `apoio_familia_id` INT NOT NULL,
+  `apoio_familias_id` INT NOT NULL,
   `apoio_data_inicio` DATE NOT NULL,
   `apoio_data_termino` DATE,
   PRIMARY KEY (`apoio_id`),
   CONSTRAINT `apoio_familia_id`
-    FOREIGN KEY (`apoio_familia_id`)
+    FOREIGN KEY (`apoio_familias_id`)
     REFERENCES `familia` (`familia_id`))
 ENGINE = InnoDB;
 

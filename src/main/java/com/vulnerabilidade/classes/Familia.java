@@ -1,11 +1,14 @@
 package com.vulnerabilidade.classes;
 
-import java.util.List;
+import java.sql.Date;
+import java.util.Set;
 import com.vulnerabilidade.DTOS.request.FamiliaRequestDTO;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,22 +37,28 @@ public class Familia {
     private String familia_cpf_responsavel2;
     private Integer familia_qtd_filhos;
     private String familia_contato;
+    private Float familia_renda;
+    private String familia_necessidades;
+    private Integer familia_nivel_vulnerabilidade;
+    private Date familia_data_visita;
 
-    @OneToMany(mappedBy = "pessoa_familia_id")
-    private List<Pessoa> pessoas;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa_familia_id")
+    private Set<Pessoa> pessoas;
 
 
-    @OneToMany(mappedBy = "apoio_familia_id")
-    private List<Apoio> apoios;
+    @ManyToMany(mappedBy = "apoio_familias_id")
+    private Set<Apoio> apoios;
 
     public Familia(FamiliaRequestDTO data) {
 
-        familia_nome_responsavel1 = data.familia_nome_responsavel1();
-        familia_nome_responsavel2 = data.familia_nome_responsavel2();
-        familia_cpf_responsavel1 = data.familia_cpf_responsavel1();
-        familia_cpf_responsavel2 = data.familia_cpf_responsavel2();
-        familia_qtd_filhos = data.familia_qtd_filhos();
-        familia_contato = data.familia_contato();
+        familia_nome_responsavel1   = data.familia_nome_responsavel1();
+        familia_nome_responsavel2   = data.familia_nome_responsavel2();
+        familia_cpf_responsavel1    = data.familia_cpf_responsavel1();
+        familia_cpf_responsavel2    = data.familia_cpf_responsavel2();
+        familia_qtd_filhos          = data.familia_qtd_filhos();
+        familia_contato             = data.familia_contato();
 
     }
+
+    
 }

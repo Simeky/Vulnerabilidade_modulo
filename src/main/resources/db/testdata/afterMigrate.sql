@@ -47,7 +47,7 @@ insert into pessoa (pessoa_nome, pessoa_cpf, pessoa_genero, pessoa_rua, pessoa_b
 ('Bella Menezes', '979.916.120-74', 'feminino', 'Rua omar Batista de Lima', 'Pirangi do Norte(Distrito Litoral)', 'Parnamirim', 'RN', '1982/01/30', '916', '84936870499', 'bellazes@gmail.com', '59191-770', 'bellazes', '123', 3);
 
 
-insert into apoio(apoio_nome, apoio_instituicao, apoio_descricao, apoio_familia_id, apoio_data_inicio, apoio_data_termino) values
+insert into apoio(apoio_nome, apoio_instituicao, apoio_descricao, apoio_familias_id, apoio_data_inicio, apoio_data_termino) values
 ('Bolsa Família', 'Governo Federal', 'É um programa de transferência de renda com condicionalidades na saúde e na educação. São elegíveis ao Programa Bolsa Família as famílias inscritas no Cadastro Único em situação de pobreza, com renda per capita até R$ 218,00.', 2, '2023/06/25', null),
 ('Minha casa, Minha vida', 'Governo Federal', 'É um programa de habitação federal do Brasil ele  subsidia a aquisição da casa ou apartamento próprio para famílias com renda até 1,8 mil reais e facilita as condições de acesso ao imóvel para famílias com renda de até 9 mil.', 1, '2023/08/29', null),
 ('Seguro desemprego', 'Governo Federal', 'É um direito do trabalhador brasileiro e o valor do seguro desemprego é baseado nos 3 últimos salários recebidos pelo trabalhador. O valor mínimo a receber é um salário mínimo. Porém, também há um limite máximo a receber, que é o teto do seguro-desemprego, no valor de R$ 2.230,97 por mês.', 3, '2023/03/02', '2023/08/02');
@@ -58,7 +58,7 @@ VALUES
 ('Maria Santos', 'maria@gmail.com', '987.654.321-09', '(21) 9876-5432', 'Atendente', 'senha456'),
 ('Carlos Oliveira', 'carlos@gmail.com', '456.789.123-45', '(31) 5555-5555', 'Desenvolvedor', 'senha789');
 
-INSERT INTO relatorio (relatorio_id, relatorio_necessidades, relatorio_renda, relatorio_nivel_vulnerabilidade, relatorio_data, relatorio_data_visita)
+INSERT INTO relatorio (relatorio_familia_id, relatorio_necessidades, relatorio_renda, relatorio_nivel_vulnerabilidade, relatorio_data, relatorio_data_visita)
 VALUES 
 (1, 'Necessidades do Relatório 1', 1500.00, 3, '2023-06-11', null),
 (2, 'Necessidades do Relatório 2', 2500.00, 2, '2023-09-30', '2023-11-17'),

@@ -71,7 +71,22 @@
 |        Changes in FuncionarioRepositorio, FuncionarioController;           |
 |        Changes in V001__create-tables file;                                |
 |        Changes in cadastro_familia.js/.html;                               |
-|                                                                            |
+--------------------------------- Committed   --------------------------------
+
+--------------------------------- 10/25/2023  --------------------------------
+|        Creation of V002__create-familia_apoio file in db/migration folder; |
+|        Changes in RelatorioController file;                                |
+--------------------------------- Committed   --------------------------------
+
+--------------------------------- 11/06/2023  --------------------------------
+|        Creation of enumeration folder;                                     |
+|        Creation of Deficiencia_tipo file in enumeration folder             |
+|        Changes in Pessoa, PessoaRequestDTO and V001__create-tables.sql;    |
+|        Changes in Apoio, ApoioRequestDTO;                                  |
+|        Creation of Genero file in enumeration folder;                      |
+|        Changes in Familia, FamiliaResponseDTO and FamiliaRequestDTO;       |
+|        Delete of Relatorio related files and datas;                        |
+|        Creation of V003__drop-alter.sql file;                              |
 --------------------------------- Committed   --------------------------------
 
 
