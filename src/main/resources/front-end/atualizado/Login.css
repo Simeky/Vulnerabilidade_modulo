@@ -5,13 +5,13 @@ p{
 
 
 body {
-    background-color: 0077B6;
+    background-color: #90E0EF;
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 
   h1{
-    background-color: CAF0F8;
+    background-color: #CAF0F8;
     text-align: center;
   }
   
@@ -24,7 +24,7 @@ body {
     left: 39%;
     background-color: transparent;
     border-radius: 5%;
-    border: 8px solid aliceblue;
+    border: 8px solid #00B4D8;
     border-left: 22%;
 }
 #loginButton{
@@ -35,7 +35,7 @@ body {
     height: 40;
     background-color: transparent;
     border-radius: 10%;
-    border: 2px solid aliceblue;
+    border: 2px solid #00B4D8;
     font-size: 1vw;
-    color: aliceblue;
+    color: 00B4D8;
 }

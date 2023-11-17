@@ -1,7 +1,7 @@
 package com.vulnerabilidade.classes;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 import com.vulnerabilidade.DTOS.response.ApoioResponseDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +39,7 @@ public class Apoio {
     @JoinTable(name = "familia_apoio",
 	           joinColumns = @JoinColumn(name ="apoio_id"),
 	           inverseJoinColumns = @JoinColumn(name ="familia_id"))
-    private List<Familia> apoio_familias_id;
+    private Set<Familia> apoio_familias_id;
 
     private Date apoio_data_inicio;
     private Date apoio_data_termino;

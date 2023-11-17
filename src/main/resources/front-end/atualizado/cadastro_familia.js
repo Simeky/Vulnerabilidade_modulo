@@ -4,7 +4,7 @@ form.addEventListener('submit', (event) => {
 
   const form_data = new form_data(form);
 
-  fetch('http://localhost:8080/familia', {
+  fetch('http://localhost:8080/familia/Add_familia', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -16,6 +16,13 @@ form.addEventListener('submit', (event) => {
       familia_cpf_responsavel2: form_data.get('familia_cpf_responsavel2'),
       familia_qtd_filhos: form_data.get('familia_qtd_filhos'),
       familia_contato: form_data.get('familia_contato'),
+      familia_renda: form_data.get('familia_renda'),
+      familia_necessidades: form_data.get('familia_necessidades'),
+      familia_nivel_vulnerabilidade: form_data.get('familia_nivel_vulnerabilidade'),
+      familia_data_visita: form_data.get('familia_data_visita'),
+      familia_qtd_membros: form_data.get('familia_qtd_membros'),
+      familia_membros_deficiencia: form_data.get('familia_membros_deficiencia')
+
     }),
   })
     .then((response) => response.json())
@@ -45,4 +52,24 @@ function format_contato(input) {
   }
 
   input.value = contato;
+}
+
+function format_Renda() {
+  // Obtém o valor atual da familia_renda
+  var renda = document.getElementById("familia_renda").value;
+
+  // Remove caracteres não numéricos
+  renda = renda.replace(/[^\d.-]/g, '');
+
+  // Converte para número
+  var valor_numerico = parseFloat(renda);
+
+  // Formata como moeda
+  var renda_formatada = valor_numerico.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+  });
+
+  // Atualiza o valor no campo
+  document.getElementById("familia_renda").value = renda_formatada;
 }

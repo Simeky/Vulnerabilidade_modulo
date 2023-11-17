@@ -1,51 +1,108 @@
 <!DOCTYPE html>
-<html lang="br">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cadastro_familia.css">
     <script src="cadastro_familia.js"></script>
-    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #90E0EF;
+            margin: 0;
+        }
+
+        form {
+            background-color: #CAF0F8;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin: 20px auto;
+            /* Adicionei margens para centralização horizontal */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #00B4D8;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(69, 105, 160);
+        }
+    </style>
+    <title>Formulário de Cadastro Familiar - Governo</title>
 </head>
+
 <body>
-    <div id="cadastro">
-        <form id="familia_form" method="post" action=""> 
-          <h1>Cadastro de familia</h1> 
-          <label for="familia_id"></label> 
 
-            <br> 
+    <form action="#familia_form" method="post">
+        <!-- Campos existentes -->
+        <label for="familia_nome_responsavel1">Nome do primeiro responsável:</label>
+        <input type="text" id="familia_nome_responsavel1" name="familia_nome_responsavel1" required >
 
-            <label for="familia_nome_responsavel1">Nome(s):</label>
-            <input id="familia_nome_responsavel1" name="familia_nome_responsavel1" required="required" type="text" placeholder="Primeiro Responsavel familia" />
-            <input id="familia_nome_responsavel2" name="familia_nome_responsavel2" type="text" placeholder="Segundo Responsavel familia" /> 
-            
-            <br> 
-            <br>
+        <label for="familia_nome_responsavel2">Nome do segundo responsável:</label>
+        <input type="text" id="familia_nome_responsavel2" name="familia_nome_responsavel2">
 
-            <label for="nome_cad">CPF(s):</label>
-            <input id="familia_cpf_responsavel1" name="familia_cpf_responsavel1" required="required" type="text" placeholder="Digite o CPF do primeiro Responsavel." oninput="format_cpf(this)"/>
-            <input id="familia_cpf_responsavel2" name="familia_cpf_responsavel2" type="text" placeholder="Digite o CPF do segundo Responsavel." oninput="format_cpf(this)"/>
+        <label for="familia_cpf_responsavel1">CPF do primeiro responsável:</label>
+        <input type="text" id="familia_cpf_responsavel1" name="familia_cpf_responsavel1" required="required"
+        oninput="format_cpf(this)">
 
-            <br>
-            <br>
-            
-            <label for="nome_cad">Quantidade de filhos:</label>
-            <input id="familia_qtd_filhos" name="familia_qtd_filhos" required="required" type="number" placeholder="QUANTIDADE DE FILHOS" />
+        <label for="familia_cpf_responsavel2">CPF do segundo responsável:</label>
+        <input type="text" id="familia_cpf_responsavel2" name="familia_cpf_responsavel2"
+        oninput="format_cpf(this)">
 
-            <br>
-            <br>
+        <label for="familia_qtd_filhos">Quantidade de Filhos:</label>
+        <input type="number" id="familia_qtd_filhos" name="familia_qtd_filhos" required>
 
-            <label for="nome_cad">Número de telefone:</label>
-            <input id="familia_contato" name="familia_contato" required="required" type="text" placeholder="DIGITE SEU TELEFONE" maxlength="14" oninput="format_contato(this)"/>
-            
-            <br>  
-            <br>
+        <label for="familia_contato">Contato da familia:</label>
+        <input type="tel" id="familia_contato" name="familia_contato" oninput="format_contato(this)">
 
-            <input type="submit" value="Cadastrar"/> 
-            
-            <br>
+        <label for="familia_renda">Renda Familiar:</label>
+        <input type="text" id="familia_renda" name="familia_renda" oninput="format_renda(this)">        
 
-        </form>
-      </div>
+        <label for="familia_nivel_vulnerabilidade">Nível de Vulnerabilidade:</label>
+        <input type="number" id="familia_nivel_vulnerabilidade" name="familia_nivel_vulnerabilidade">
+
+        <label for="familia_data_visita">Data da Visita:</label>
+        <input type="date" id="familia_data_visita" name="familia_data_visita">
+
+        <label for="familia_qtd_membros">Quantidade de Membros na Família:</label>
+        <input type="number" id="familia_qtd_membros" name="familia_qtd_membros" required>
+
+        <label for="familia_membros_deficiencia">Membros com Deficiência na Família:</label>
+        <select id="familia_membros_deficiencia" name="familia_membros_deficiencia">
+            <option value="false">Não</option>
+            <option value="true">Sim</option>
+        </select>
+        
+        <label for="familia_necessidades">Necessidades da Família:</label>
+        <input type="text" id="familia_necessidades" name="familia_necessidades" size="100">
+
+        <hr>
+
+        <button type="submit">Cadastrar Família</button>
+    </form>
+
 </body>
+
 </html>

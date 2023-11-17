@@ -1,7 +1,7 @@
 package com.vulnerabilidade.DTOS.response;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 import com.vulnerabilidade.classes.Apoio;
 import com.vulnerabilidade.classes.Familia;
 
@@ -9,7 +9,7 @@ public record ApoioResponseDTO(  Long apoio_id,
                                 String apoio_nome,
                                 String apoio_instituicao,
                                 String apoio_descricao,
-                                List<Familia> apoio_familias_id,
+                                Set<Familia> apoio_familias_id,
                                 Date apoio_data_inicio,
                                 Date apoio_data_termino ){
 

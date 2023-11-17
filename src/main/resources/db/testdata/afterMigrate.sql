@@ -11,7 +11,6 @@ delete from familia;
 delete from pessoa;
 delete from apoio;
 delete from funcionario;
-delete from relatorio;
 
 -- -----------------------------------------------------
 -- Habilita checks de foreign key
@@ -27,24 +26,23 @@ alter table familia auto_increment = 1;
 alter table pessoa auto_increment = 1;
 alter table apoio auto_increment = 1;
 alter table funcionario auto_increment = 1;
-alter table relatorio auto_increment = 1;
 
 -- -----------------------------------------------------
 -- Popula a tabela com a massa de dados de teste
 -- -----------------------------------------------------
 
-insert into familia(familia_nome_responsavel1, familia_nome_responsavel2, familia_cpf_responsavel1, familia_cpf_responsavel2, familia_qtd_filhos, familia_contato) values 
-('João Alberto Silva', NULL, '046.774.110-77', NULL, 2, '47900000000'), 
-('Maria Bezerra', 'José Bezerra', '701.742.440-96', '604.885.820-59', 4, '47911111111'),
-('Windersson Menezes', 'Bella Menezes', '979.916.120-74', '600.576.410-13', 1, '84983580499');
+insert into familia(familia_nome_responsavel1, familia_nome_responsavel2, familia_cpf_responsavel1, familia_cpf_responsavel2, familia_qtd_filhos, familia_contato, familia_renda, familia_necessidades, familia_nivel_vulnerabilidade, familia_data_visita, familia_qtd_membros, familia_membros_deficiencia) values 
+('João Alberto Silva', NULL, '046.774.110-77', NULL, 2, '47900000000', 2300, 'Não possuem geladeira', 57, '2023/11/10', 3, FALSE), 
+('Maria Bezerra', 'José Bezerra', '701.742.440-96', '604.885.820-59', 4, '47911111111', 2300, 'Não possuem geladeira', 57, '2023/11/10', 6, FALSE),
+('Windersson Menezes', 'Bella Menezes', '979.916.120-74', '600.576.410-13', 1, '84983580499', 2300, 'Não possuem geladeira', 57, '2023/11/10', 3, TRUE);
 
 
-insert into pessoa (pessoa_nome, pessoa_cpf, pessoa_genero, pessoa_rua, pessoa_bairro, pessoa_cidade, pessoa_estado, pessoa_nascimento, pessoa_nr_residencia, pessoa_contato, pessoa_email, pessoa_cep, pessoa_usuario, pessoa_senha, pessoa_familia_id) values 
-('João Alberto Silva', '046.774.110-77', 'masculino','Rua Vereador Pedro Merizio','Centro', 'Botuverá', 'SC', '1971/08/22', '15', '47900000000', 'joalberto@gmail.com', '88295-970', 'joalberto', '123', 1),
-('Maria Bezerra', '701.742.440-96', 'feminino', 'Rua 6-A', 'Parque Residencial Nova Fronteira', 'Gurupi', 'TO', '1991/06/22', '376', '63988426297', 'maria.bez@gmail.com', '77420-400', 'maria_bezerra', '123', 2),
-('José Bezerra', '604.885.820-59', 'masculino', 'Rua 6-A', 'Parque Residencial Nova Fronteira', 'Gurupi', 'TO', '1993/02/14', '376', '63936873078', 'jose.bezerra@gmail.com', '77420-400', 'jobezerra', '123', 2),
-('Windersson Menezes', '979.916.120-74', 'masculino', 'Rua omar Batista de Lima', 'Pirangi do Norte(Distrito Litoral)', 'Parnamirim', 'RN', '1986/11/15', '916', '84983580499', 'windermene@gmail.com', '59191-770', 'winmene', '123', 3),
-('Bella Menezes', '979.916.120-74', 'feminino', 'Rua omar Batista de Lima', 'Pirangi do Norte(Distrito Litoral)', 'Parnamirim', 'RN', '1982/01/30', '916', '84936870499', 'bellazes@gmail.com', '59191-770', 'bellazes', '123', 3);
+insert into pessoa (pessoa_nome, pessoa_cpf, pessoa_genero, pessoa_rua, pessoa_bairro, pessoa_cidade, pessoa_estado, pessoa_nascimento, pessoa_nr_residencia, pessoa_contato, pessoa_email, pessoa_cep, pessoa_usuario, pessoa_senha, pessoa_deficiencia_tipo, pessoa_deficiencia) values 
+('João Alberto Silva', '046.774.110-77', 'MASCULINO','Rua Vereador Pedro Merizio','Centro', 'Botuverá', 'SC', '1971/08/22', '15', '47900000000', 'joalberto@gmail.com', '88295-970', 'joalberto', '123', 'NENHUM', null),
+('Maria Bezerra', '701.742.440-96', 'FEMININO', 'Rua 6-A', 'Parque Residencial Nova Fronteira', 'Gurupi', 'TO', '1991/06/22', '376', '63988426297', 'maria.bez@gmail.com', '77420-400', 'maria_bezerra', '123', 'NENHUM', null),
+('José Bezerra', '604.885.820-59', 'MASCULINO', 'Rua 6-A', 'Parque Residencial Nova Fronteira', 'Gurupi', 'TO', '1993/02/14', '376', '63936873078', 'jose.bezerra@gmail.com', '77420-400', 'jobezerra', '123', 'NENHUM', null),
+('Windersson Menezes', '979.916.120-74', 'MASCULINO', 'Rua omar Batista de Lima', 'Pirangi do Norte(Distrito Litoral)', 'Parnamirim', 'RN', '1986/11/15', '916', '84983580499', 'windermene@gmail.com', '59191-770', 'winmene', '123', 'NENHUM', null),
+('Bella Menezes', '979.916.120-74', 'FEMININO', 'Rua omar Batista de Lima', 'Pirangi do Norte(Distrito Litoral)', 'Parnamirim', 'RN', '1982/01/30', '916', '84936870499', 'bellazes@gmail.com', '59191-770', 'bellazes', '123', 'NENHUM', null);
 
 
 insert into apoio(apoio_nome, apoio_instituicao, apoio_descricao, apoio_familias_id, apoio_data_inicio, apoio_data_termino) values
@@ -52,14 +50,15 @@ insert into apoio(apoio_nome, apoio_instituicao, apoio_descricao, apoio_familias
 ('Minha casa, Minha vida', 'Governo Federal', 'É um programa de habitação federal do Brasil ele  subsidia a aquisição da casa ou apartamento próprio para famílias com renda até 1,8 mil reais e facilita as condições de acesso ao imóvel para famílias com renda de até 9 mil.', 1, '2023/08/29', null),
 ('Seguro desemprego', 'Governo Federal', 'É um direito do trabalhador brasileiro e o valor do seguro desemprego é baseado nos 3 últimos salários recebidos pelo trabalhador. O valor mínimo a receber é um salário mínimo. Porém, também há um limite máximo a receber, que é o teto do seguro-desemprego, no valor de R$ 2.230,97 por mês.', 3, '2023/03/02', '2023/08/02');
 
-INSERT INTO funcionario(funcionario_nome, funcionario_email, funcionario_cpf, funcionario_contato, funcionario_funcao, funcionario_senha)
+INSERT INTO funcionario(funcionario_pessoa_id, funcionario_funcao, funcionario_usuario, funcionario_senha, funcionario_departamento, funcionario_salario, funcionario_role)
 VALUES 
-('João Magalhães', 'joao@gmail.com', '123.456.789-01', '(11) 1234-5678', 'Gerente', 'senha123'),
-('Maria Santos', 'maria@gmail.com', '987.654.321-09', '(21) 9876-5432', 'Atendente', 'senha456'),
-('Carlos Oliveira', 'carlos@gmail.com', '456.789.123-45', '(31) 5555-5555', 'Desenvolvedor', 'senha789');
+(1, 'Gerente', "abacate123", "123", 'Vendas', 2400, "ADMIN"),
+(5, 'Atendente', "jeff69", "1234", 'Marketing', 800, "USER"),
+(3, 'Desenvolvedor', "dvs23", "12345", 'TI', 1500, "ADMIN");
 
-INSERT INTO relatorio (relatorio_familia_id, relatorio_necessidades, relatorio_renda, relatorio_nivel_vulnerabilidade, relatorio_data, relatorio_data_visita)
-VALUES 
-(1, 'Necessidades do Relatório 1', 1500.00, 3, '2023-06-11', null),
-(2, 'Necessidades do Relatório 2', 2500.00, 2, '2023-09-30', '2023-11-17'),
-(3, 'Necessidades do Relatório 3', 1000.00, 1, '2023-08-04', null);
+INSERT INTO vulneravel(vulneravel_pessoa_id, vulneravel_esta_trabalhando, vulneravel_trabalho, vulneravel_salario, vulneravel_familia_id)
+VALUES
+(2, FALSE, null, null, 3),
+(4, FALSE, null, null, 1);
+
+

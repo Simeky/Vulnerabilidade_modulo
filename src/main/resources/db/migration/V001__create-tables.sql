@@ -25,11 +25,7 @@ CREATE TABLE IF NOT EXISTS `pessoa` (
   `pessoa_cep` VARCHAR(9) NOT NULL,
   `pessoa_usuario` VARCHAR(45) NOT NULL,
   `pessoa_senha` VARCHAR(45) NOT NULL,  
-  `pessoa_familia_id` INT NOT NULL,
-  PRIMARY KEY (`pessoa_id`),
-  CONSTRAINT `pessoa_familia_id`
-    FOREIGN KEY (`pessoa_familia_id`)
-    REFERENCES `familia` (`familia_id`))
+  PRIMARY KEY (`pessoa_id`))
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `relatorio` (
@@ -60,12 +56,15 @@ CREATE TABLE IF NOT EXISTS `apoio` (
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `funcionario` (
-  `funcionario_id` INT NOT NULL AUTO_INCREMENT,
+  `funcionario_id` INT NOT NULL,
   `funcionario_nome` VARCHAR(45) NOT NULL,
   `funcionario_email` VARCHAR(45) NOT NULL,
   `funcionario_cpf` VARCHAR(14) NOT NULL,
   `funcionario_contato` VARCHAR(45) NOT NULL,
   `funcionario_funcao` VARCHAR(45) NOT NULL,
   `funcionario_senha` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`funcionario_id`))
+  PRIMARY KEY (`funcionario_id`),
+  CONSTRAINT `fk_pessoa_funcionario_id`
+    FOREIGN KEY (`funcionario_id`)
+    REFERENCES `pessoa` (`pessoa_id`))
 ENGINE = InnoDB;
