@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-
 public class securityConfigurations {
 
   @Autowired
@@ -29,9 +28,10 @@ public class securityConfigurations {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-              .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-              .requestMatchers(HttpMethod.POST, "/auth/Add_funcionario").permitAll()
-              .requestMatchers(HttpMethod.POST, "/funcionario").hasRole("ADMIN")
+              .requestMatchers(HttpMethod.GET, "/**").permitAll()
+              .requestMatchers(HttpMethod.POST, "/**").permitAll()
+              .requestMatchers(HttpMethod.PUT, "/**").permitAll()
+              .requestMatchers(HttpMethod.DELETE, "/**").permitAll()
               .anyRequest().authenticated())
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
             .build();

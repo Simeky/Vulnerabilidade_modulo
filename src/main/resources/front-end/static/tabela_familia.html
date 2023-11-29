@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela de Famílias</title>
+  <style>
+    body {
+      background-color: #CAF0F8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #00B4D8;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #00B4D8;
+      color: #fff;
+    }
+
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
+      background-color: #0077B6;
+      color: #fff;
+      border: none;
+    }
+
+    #editModal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #CAF0F8;
+      border: 1px solid #0077B6;
+      z-index: 1;
+      max-width: 600px ;
+    }
+
+    #editModal label {
+      color: #0c0d0e;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    #editModal input {
+      width: 95%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    #editModal button {
+      background-color: #0077B6;
+      color: #CAF0F8;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<table id="tabelafamilia">
+  <thead>
+    <tr>
+      <th>ID da Família</th>
+      <th>Nome do Responsável 1</th>
+      <th>CPF do Responsável 1</th>
+      <th>Quantidade de membros</th>
+      <th>Quantidade de filhos</th>
+      <th>Contato da Família</th>
+      <th>Renda Familiar</th>
+      <th>Necessidades</th>
+      <th>Nível de Vulnerabilidade</th>
+      <th>Membros com Deficiência</th>
+      <th>Data Para Visita</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+
+<div id="editModal">
+  <h2>Editar Família</h2>
+  <label for="nomeresp1">Nome do Responsável 1:</label>
+  <input type="text" id="nomeresp1">
+
+  <label for="nomeresp2">Nome do Responsável 2:</label>
+  <input type="text" id="nomeresp2">
+
+  <label for="cpfresp1">CPF do Responsável 1:</label>
+  <input type="text" onblur="formatarCPF(this)" id="cpfresp1">
+
+  <label for="cpfresp2">CPF do Responsável 2:</label>
+  <input type="text" onblur="formatarCPF(this)" id="cpfresp2">
+
+  <label for="cpfresp2">Quantidade de membros:</label>
+  <input type="number" id="nrmembros">
+
+  <label for="cpfresp2">Quantidade de filhos:</label>
+  <input type="number" id="nrfilhos">
+
+  <label for="familiacontato">Contato da Família:</label>
+  <input type="text" onblur="formatarContato(this)" id="familiacontato">
+
+  <label for="familiarenda">Renda Familiar:</label>
+  <input type="double" id="familiarenda">
+
+  <label for="familianecessidade">Necessidades:</label>
+  <input type="text" id="familianecessidade">
+
+  <label for="familiavulnerabilidade">Nível de Vulnerabilidade:</label>
+  <input type="number" id="familiavulnerabilidade">
+
+  <label for="familiadef">Membros com Deficiência:</label>
+  <select id="familiadef" class="input">
+    <option value="" disabled selected>Informe se tem Deficientes na Família</option>
+    <option value="false">Não</option>
+    <option value="true">Sim</option>
+  </select>
+
+  <label for="datavisita">Data Para Visita:</label>
+  <input type="date" id="datavisita">
+
+  <button onclick="salvar_dados()">Salvar Alterações</button>
+  <button onclick="closeModal()">Fechar</button>
+</div>
+
+<button onclick="cadastro_familia_tela()">Cadastrar Nova Família</button>
+
+<button onclick="tabela_apoio()">Ver Apoios</button>
+
+
+<script>
+
+  // Função para formatar o campo de contato (XX) XXXXX-XXXX
+  function formatarContato(input) {
+    let contato = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
+    // Verifica se o número tem pelo menos 10 dígitos (incluindo DDD)
+    if (contato.length >= 10) {
+        contato = `(${contato.slice(0, 2)}) ${contato.slice(2, 7)}-${contato.slice(7, 11)}`;
+        input.value = contato;
+    }
+}
+
+// Formatação de CPF
+function formatarCPF(input) {
+    input.value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    input.value = input.value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+}
+
+function validarCPF(cpf) {
+    cpf = cpf.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
+
+    if (cpf.length !== 11 || /^(\d)\1+$/g.test(cpf)) {
+        return false;
+    }
+
+    let add = 0;
+    for (let i = 0; i < 9; i++) {
+        add += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+
+    let rev = 11 - (add % 11);
+    if (rev === 10 || rev === 11) {
+        rev = 0;
+    }
+
+    if (rev !== parseInt(cpf.charAt(9))) {
+        return false;
+    }
+
+    add = 0;
+    for (let i = 0; i < 10; i++) {
+        add += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+
+    rev = 11 - (add % 11);
+    if (rev === 10 || rev === 11) {
+        rev = 0;
+    }
+
+    if (rev !== parseInt(cpf.charAt(10))) {
+        return false;
+    }
+
+    return true;
+}
+
+function cadastro_familia_tela() {
+    window.location.href = 'cadastro_familia.html';
+  }
+
+  function tabela_apoio() {
+    window.location.href = 'tabela_apoio.html';
+  }
+
+  // Função para popular a tabela com os dados do db
+function populateTable() {
+  const tableBody = document.querySelector('#tabelafamilia tbody');
+
+  // Fazer solicitação AJAX para obter dados do servidor
+  fetch('http://localhost:8080/familia/familias')
+      .then(response => response.json())
+      .then(data => {
+          data.forEach(familia => {
+              const row = tableBody.insertRow();
+              row.innerHTML = `
+                  <td>${familia.familia_id}</td>
+                  <td>${familia.familia_nome_responsavel1}</td>
+                  <td>${familia.familia_cpf_responsavel1}</td>
+                  <td>${familia.familia_qtd_membros}</td>
+                  <td>${familia.familia_qtd_filhos}</td>
+                  <td>${familia.familia_contato}</td>
+                  <td>${familia.familia_renda}</td>
+                  <td>${familia.familia_necessidades}</td>
+                  <td>${familia.familia_nivel_vulnerabilidade}</td>
+                  <td>${familia.familia_membros_deficiencia}</td>
+                  <td>${familia.familia_data_visita}</td>
+                  <td>
+                      <button onclick="openEditModal(${familia.familia_id})">Editar</button>
+                      <button onclick="delete_familia(${familia.familia_id})">Excluir</button>
+                  </td>
+              `;
+          });
+      })
+      .catch(error => console.error('Erro ao obter dados do servidor:', error));
+}
+
+  // Função para abrir o modal de edição com os dados preenchidos
+  // Função para abrir o modal de edição com os dados preenchidos
+function openEditModal(familia_id) {
+  // Fazer solicitação AJAX para obter dados do servidor
+  fetch(`http://localhost:8080/familia/get_${familia_id}`)
+      .then(response => response.json())
+      .then(familia => {
+          document.getElementById('nomeresp1').value = familia.familia_nome_responsavel1;
+          document.getElementById('nomeresp2').value = familia.familia_nome_responsavel2;
+          document.getElementById('cpfresp1').value = familia.familia_cpf_responsavel1;
+          document.getElementById('cpfresp2').value = familia.familia_cpf_responsavel2;
+          document.getElementById('nrmembros').value = familia.familia_qtd_membros;
+          document.getElementById('nrfilhos').value = familia.familia_qtd_filhos;
+          document.getElementById('familiacontato').value = familia.familia_contato;
+          document.getElementById('familiarenda').value = familia.familia_renda;
+          document.getElementById('familianecessidade').value = familia.familia_necessidades;
+          document.getElementById('familiavulnerabilidade').value = familia.familia_nivel_vulnerabilidade;
+          document.getElementById('familiadef').value = familia.familia_membros_deficiencia;
+          document.getElementById('datavisita').value = familia.familia_data_visita;
+
+          document.getElementById('editModal').style.display = 'block';
+      })
+      .catch(error => console.error('Erro ao obter dados do servidor:', error));
+}
+
+  // Função para salvar as alterações feitas no modal de edição
+function salvar_dados(familia_id) {
+  const url = `http://localhost:8080/familia/update_${familia_id}`; // ajuste conforme necessário
+
+  const data = {
+    familia_nome_responsavel1: document.getElementById('nomeresp1').value,
+    familia_nome_responsavel2: document.getElementById('nomeresp2').value,
+    familia_cpf_responsavel1: document.getElementById('cpfresp1').value,
+    familia_cpf_responsavel2: document.getElementById('cpfresp2').value,
+    familia_qtd_membros: document.getElementById('nrmembros').value,
+    familia_qtd_filhos: document.getElementById('nrfilhos').value,
+    familia_contato: document.getElementById('familiacontato').value,
+    familia_renda: document.getElementById('familiarenda').value,
+    familia_necessidades: document.getElementById('familianecessidade').value,
+    familia_nivel_vulnerabilidade: document.getElementById('familiavulnerabilidade').value,
+    familia_membros_deficiencia: document.getElementById('familiadef').value,
+    familia_data_visita: document.getElementById('datavisita').value
+  };
+
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log('Dados salvos com sucesso:', result);
+    closeModal();
+    update_familia(); // Atualizar a tabela após a edição
+  })
+  .catch(error => console.error('Erro ao salvar dados:', error));
+}
+
+  // Função para fechar o modal de edição
+  function closeModal() {
+    document.getElementById('editModal').style.display = 'none';
+  }
+
+  // Função para excluir uma família
+function delete_familia(familia_id) {
+  const url = `http://localhost:8080/familia/delete_${familia_id}`; // ajuste conforme necessário
+
+  fetch(url, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log('Família excluída com sucesso.');
+      update_familia(); // Atualizar a tabela após a exclusão
+    } else {
+      console.error('Erro ao excluir família. Código:', response.status);
+    }
+  })
+  .catch(error => console.error('Erro ao excluir família:', error));
+}
+
+  // Função para atualizar a tabela após alterações
+  function update_familia() {
+    const tableBody = document.querySelector('#tabelafamilia tbody');
+    tableBody.innerHTML = ''; // Limpar o conteúdo atual da tabela
+    populateTable(); // Popula a tabela com os dados atualizados
+  }
+
+  // Chamar a função para popular a tabela ao carregar a página
+  window.onload = populateTable;
+</script>
+
+</body>
+</html>

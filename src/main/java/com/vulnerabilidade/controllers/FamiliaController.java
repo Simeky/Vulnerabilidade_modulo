@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("familia")
+@CrossOrigin(originPatterns = {"http://127.0.0.1:5500", "http://localhost:8080"}, allowedHeaders = "*")
 public class FamiliaController {
 
   @Autowired
@@ -35,6 +36,7 @@ public class FamiliaController {
   }
 
   // Read
+
   @GetMapping("familias")
   public List<FamiliaResponseDTO> getAll() {
 
@@ -42,6 +44,21 @@ public class FamiliaController {
     List<FamiliaResponseDTO> familia_list = repositorio.findAll().stream().map(FamiliaResponseDTO::new).toList();
     return familia_list;
   }
+
+@GetMapping("/get_{familia_id}")
+public ResponseEntity<FamiliaResponseDTO> getOne(@PathVariable Long familia_id) {
+    // Método para recuperar uma família específica com base no ID e mapear para um DTO de resposta.
+    Optional<Familia> familiaOptional = repositorio.findById(familia_id);
+    
+    if (familiaOptional.isPresent()) {
+        Familia familia = familiaOptional.get();
+        FamiliaResponseDTO responseDTO = new FamiliaResponseDTO(familia);
+        return ResponseEntity.ok(responseDTO);
+    } else {
+        // Se a família não for encontrada, retornar uma resposta 404 Not Found.
+        return ResponseEntity.notFound().build();
+    }
+}
 
   // Update
   @PutMapping("/update_{familia_id}")

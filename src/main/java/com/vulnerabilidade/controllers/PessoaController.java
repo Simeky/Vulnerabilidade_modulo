@@ -12,12 +12,14 @@ import com.vulnerabilidade.repositorios.VulneravelRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("pessoa")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PessoaController {
 
   @Autowired
@@ -31,6 +33,7 @@ public class PessoaController {
 
  
   //Read pessoas
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
   @GetMapping("pessoas")
   public List<PessoaResponseDTO> getAll(){
 
@@ -40,6 +43,7 @@ public class PessoaController {
   }
 
   //Read funcionários
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
   @GetMapping("funcionarios")
   public List<Pessoa_funcionarioRequestDTO> getAll_func() {
     List<Pessoa_funcionarioRequestDTO> funcionario_lista = new ArrayList<>();
@@ -59,6 +63,7 @@ public class PessoaController {
   }
 
   //Read vulneráveis
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
   @GetMapping("vulneraveis")
   public List<Pessoa_vulneravelRequestDTO> getAll_vul() {
     List<Pessoa_vulneravelRequestDTO> vulneravel_lista = new ArrayList<>();

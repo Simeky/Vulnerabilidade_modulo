@@ -5,18 +5,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.vulnerabilidade.repositorios.FuncionarioRepositorio;
+import com.vulnerabilidade.repositorios.UsersRepositorio;
 
 @Service
 public class AuthorizationService implements UserDetailsService{
 
   @Autowired
-  FuncionarioRepositorio repositorio;
+  UsersRepositorio repositorio;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return repositorio.findByFuncionario_usuario(username);
+    return repositorio.findByLogin(username);
   }
   
 }

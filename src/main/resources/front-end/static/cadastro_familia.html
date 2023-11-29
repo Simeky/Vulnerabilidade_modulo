@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Familia</title>
+</head>
+<style>
+    :root {
+        --cor-fundo: #CAF0F8; /* Cor de fundo principal */
+        --cor-hover: rgb(0, 119, 182);
+        --cor-primaria: rgb(3, 4, 94);
+        --cor-linha: #90E0EF;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--cor-fundo);
+    }
+
+    .dp-menu {
+        display: flex;
+        justify-content: center;
+    }
+
+    .dp-menu ul {
+        list-style-type: none;
+        padding: 0;
+        background-color: var(--cor-fundo);
+    }
+
+    .dp-menu ul li {
+        display: inline;
+        position: relative;
+    }
+
+    .dp-menu ul a {
+        color: var(--cor-primaria);
+        text-decoration: none;
+        display: inline-block;
+        padding: 10px;
+        transition: background .6s;
+    }
+
+    .dp-menu ul a:hover {
+        background-color: var(--cor-hover);
+        color: #fff; /* Cor do texto no hover */
+    }
+
+   
+    .dp-menu ul ul {
+        display: none;
+        left: 0;
+        position: absolute;
+        width: 150px;
+    }
+
+    .dp-menu ul li:hover ul {
+        display: block;
+    }
+
+    .dp-menu ul ul li a {
+        display: block;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--cor-linha);
+        border: 1px solid var(--cor-primaria);
+        border-radius: 5px;
+    }
+
+    .form-container h2 {
+        color: var(--cor-primaria);
+        text-align: center;
+    }
+
+    .form-container label {
+        margin: 0;
+    }
+
+    .form-container .field .heading {
+        display: inline-block;
+        color: var(--cor-primaria);
+        margin-bottom: 10px;
+        vertical-align: top;
+    }
+
+    .form-container .field .input {
+        background-color: var(--cor-fundo);
+        width: 96%;
+        padding: 10px;
+        border: 1px solid var(--cor-primaria);
+        border-radius: 5px;
+        transition: var(--cor-primaria);
+        margin-bottom: 10px;
+    }
+
+    .form-container .botao-enviar {
+        display: block;
+        margin: 20px auto;
+        color: #fff; /* Cor do texto do botão */
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        font-size: 17px;
+        border-radius: 7px;
+        letter-spacing: 4px;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: 0.5s;
+        transition-property: box-shadow;
+        background: rgb(0, 140, 255);
+        box-shadow: 0 0 25px rgb(0, 140, 255);
+    }
+
+    .form-container .botao-enviar:hover {
+        box-shadow: 0 0 5px rgb(0, 140, 255),
+        0 0 25px rgb(0, 140, 255),
+        0 0 50px rgb(0, 140, 255),
+        0 0 100px rgb(0, 140, 255);
+    }
+
+    .form-container .grupo   {
+        border: 1px solid var(--cor-linha);
+    }
+
+    .modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%; /* Ajuste a posição vertical para 50% da tela */
+        left: 50%; /* Ajuste a posição horizontal para 50% da tela */
+        transform: translate(-50%, -50%); /* Centraliza a div */
+        background-color: var(--cor-hover);
+        width: 300px; /* Largura desejada */
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+    #custom-modal-close {
+        background-color: var(--cor-hover); /* Cor de fundo no hover */
+        color: #fff; /* Cor do texto branca */
+        padding: 5px 10px; /* Espaçamento interno do botão */
+        cursor: pointer; /* Alterar o cursor para indicar que é clicável */
+        border: none; /* Sem borda */
+        border-radius: 5px; /* Adicione um pequeno raio de borda para arredondar os cantos */
+    }
+
+    #custom-modal-close:hover {
+        background-color: #FF0000; /* Cor de fundo no hover */
+    }
+
+    #btnVoltar {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #0077B6;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+</style>
+
+<script>
+    // JavaScript para buscar informações de endereço com base no CEP
+    async function fetchAddressFromCEP() {
+        const cep = document.getElementById('cep').value;
+        if (!cep) return;
+
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (data.erro) {
+            mostrarModal('CEP não encontrado');
+        } else {
+            document.getElementById('rua').value = data.logradouro;
+            document.getElementById('bairro').value = data.bairro;
+            document.getElementById('cidade').value = data.localidade;
+            document.getElementById('estado').value = data.uf;
+        }
+    }
+
+    // Função para formatar o campo de contato (XX) XXXXX-XXXX
+    function formatarContato(input) {
+        let contato = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
+        // Verifica se o número tem pelo menos 10 dígitos (incluindo DDD)
+        if (contato.length >= 10) {
+            contato = `(${contato.slice(0, 2)}) ${contato.slice(2, 7)}-${contato.slice(7, 11)}`;
+            input.value = contato;
+        }
+    }
+
+    // Formatação de CPF
+    function formatarCPF(input) {
+        input.value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        input.value = input.value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+
+    function validarCPF(cpf) {
+        cpf = cpf.replace(/[^\d]/g, ''); // Remove caracteres não numéricos
+
+        if (cpf.length !== 11 || /^(\d)\1+$/g.test(cpf)) {
+            return false;
+        }
+
+        let add = 0;
+        for (let i = 0; i < 9; i++) {
+            add += parseInt(cpf.charAt(i)) * (10 - i);
+        }
+
+        let rev = 11 - (add % 11);
+        if (rev === 10 || rev === 11) {
+            rev = 0;
+        }
+
+        if (rev !== parseInt(cpf.charAt(9))) {
+            return false;
+        }
+
+        add = 0;
+        for (let i = 0; i < 10; i++) {
+            add += parseInt(cpf.charAt(i)) * (11 - i);
+        }
+
+        rev = 11 - (add % 11);
+        if (rev === 10 || rev === 11) {
+            rev = 0;
+        }
+
+        if (rev !== parseInt(cpf.charAt(10))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Função para mostrar o modal com a mensagem personalizada
+    function mostrarModal(message) {
+        const modal = document.getElementById('custom-modal');
+        const modalMessage = document.getElementById('custom-modal-message');
+
+        modalMessage.textContent = message;
+        modal.style.display = 'block';
+    }
+
+    // Função para ocultar o modal
+    function fecharModal() {
+        const modal = document.getElementById('custom-modal');
+        modal.style.display = 'none';
+    }
+
+    function voltarParaTabela() {
+        window.location.href = 'tabela_familia.html';
+    }
+
+</script>
+
+<body>
+<div class="form-container">
+    <form id="familiaForm">
+        <fieldset class="grupo">
+        <h2>Cadastrar Família</h2>
+            <div class="field">
+                <span class="heading">Nome do Primeiro Responsável</span><br>
+                <input type="text" class="input" id="nomeresp1" required placeholder="Informe o Primeiro Responsável da Família">
+            </div>
+
+            <div class="field">
+              <span class="heading">Nome do Segundo Responsável</span><br>
+              <input type="text" class="input" id="nomeresp2" placeholder="Informe o Segundo Responsável da Família">
+          </div>
+
+          <div class="field">
+            <span class="heading">CPF do Primeiro Responsável</span><br>
+            <input type="text" class="input" id="cpfresp1" required onblur="formatarCPF(this)" placeholder="Informe o CPF do Primeiro Responsavel da Família">
+        </div>
+
+        <div class="field">
+          <span class="heading">CPF do Segundo Responsável</span><br>
+          <input type="text" class="input" id="cpfresp2" onblur="formatarCPF(this)" placeholder="Informe o CPF do Segundo Responsavel da Família">
+      </div>
+
+      <div class="field">
+        <span class="heading">Número de Membros da Família</span><br>
+        <input type="number" class="input" id="nrmembros" required placeholder="Informe o número de membros da Família">
+    </div>
+
+    <div class="field">
+      <span class="heading">Número de Filhos da Família</span><br>
+      <input type="number" class="input" id="nrfilhos" required placeholder="Informe o número de filhos da Família">
+  </div>
+
+  <div class="field">
+    <span class="heading">Contato da Família</span><br>
+    <input type="text" class="input" id="familiacontato" required onblur="formatarContato(this)" placeholder="Informe o contato da Família">
+</div>
+
+<div class="field">
+  <span class="heading">Renda da Família</span><br>
+  <input type="double" class="input" id="familiarenda" required placeholder="Informe a Renda da Família">
+</div>
+
+<div class="field">
+  <span class="heading">Necessidades da Família</span><br>
+  <input type="text" class="input" id="familianecessidade" required placeholder="Informe as Necessidades da Família">
+</div>
+
+<div class="field">
+  <span class="heading">Vulnerabilidade da Família</span><br>
+  <input type="number" class="input" id="familiavulnerabilidade" required placeholder="Informe a Vulnerabilidade da Família">
+</div>
+
+<div class="field">
+  <span class="heading">Deficientes na Família</span><br>
+  
+  <select id="familiadef" class="input" required>
+    <option value="" disabled selected>Informe se tem Deficientes na Família</option>
+    <option value="false">Não</option>
+    <option value="true">Sim</option>
+  </select>
+</div>
+
+            <div class="field">
+                <span class="heading">Data De Visita</span><br>
+                <input type="date" class="input" id="datavisita" required placeholder="Informe a Data de Visita">
+            </div>
+
+            <button class="botao-enviar" type="submit">Cadastrar</button>
+            <button id="btnVoltar" onclick="voltarParaTabela()">Voltar para Tabela</button>
+
+            </fieldset>
+        </form>
+    </div>
+
+<div id="custom-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <p id="custom-modal-message">Mensagem de alerta personalizada.</p>
+        <button id="custom-modal-close" onclick="fecharModal()">Fechar</button>
+    </div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    const form = document.getElementById('familiaForm');
+    const eventoList = document.getElementById('eventoList');
+
+
+    function getFamilia() {
+        axios.get('http://localhost:8080/familia/familias')
+            .then(function(response) {
+                eventoList.innerHTML = '';
+                response.data.forEach(function(familia) {
+                    const li = document.createElement('li');
+                    li.textContent = familia.familia_id;
+                    eventoList.appendChild(li);
+                });
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('familiaForm');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const nomeresp1 = document.getElementById('nomeresp1').value;
+            const nomeresp2 = document.getElementById('nomeresp2').value;
+            const cpfresp1 = document.getElementById('cpfresp1').value;
+            const cpfresp2 = document.getElementById('cpfresp2').value;
+            const nrmembros = parseInt(document.getElementById('nrmembros').value);
+            const nrfilhos = parseInt(document.getElementById('nrfilhos').value);
+            const familiacontato = document.getElementById('familiacontato').value;
+            const familiarenda = parseFloat(document.getElementById('familiarenda').value);
+            const familianecessidade = document.getElementById('familianecessidade').value;
+            const familiavulnerabilidade = document.getElementById('familiavulnerabilidade').value;
+            const familiadef = document.getElementById('familiadef').value;
+            const datavisita = document.getElementById('datavisita').value;           
+
+            if (!validarCPF(cpfresp1)) {
+                mostrarModal('CPF inválido');
+                return;
+            }
+
+            if (!validarCPF(cpfresp2)) {
+              mostrarModal('CPF inválido');
+              return;
+          }
+
+            const currentDate = new Date();
+            const selectedDate = new Date(datavisita);
+
+            if (currentDate > selectedDate) {
+                mostrarModal('A Data não pode ser anterior a de hoje');
+                return;
+            }
+
+            const data = {
+                familia_nome_responsavel1: nomeresp1, 
+                familia_nome_responsavel2: nomeresp2,
+                familia_cpf_responsavel1: cpfresp1,
+                familia_cpf_responsavel2: cpfresp2,
+                familia_qtd_membros: nrmembros.value,
+                familia_qtd_filhos: nrfilhos.value,
+                familia_contato: familiacontato.value,
+                familia_renda: familiarenda.value,
+                familia_necessiades: familianecessidade,
+                familia_nivel_vulnerabilidade: familiavulnerabilidade,
+                familia_membros_deficiencia: familiadef,
+                familia_data_visita: datavisita
+            };
+
+            axios.post('http://localhost:8080/familia/Add_familia', data)
+                .then(function (response) {
+                    console.log(response.data);
+                    form.reset();
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+        });
+
+        getFamilia();
+    });
+</script>
+</body>
+
+</html>

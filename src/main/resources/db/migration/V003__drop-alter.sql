@@ -10,7 +10,9 @@ ADD `familia_data_visita` DATE;
 
 ALTER TABLE pessoa 
 ADD `pessoa_deficiencia_tipo` VARCHAR(6) not null,
-ADD `pessoa_deficiencia` VARCHAR(45);
+ADD `pessoa_deficiencia` VARCHAR(45),
+DROP COLUMN `pessoa_usuario`,
+DROP COLUMN `pessoa_senha`;
 
 ALTER TABLE funcionario
 DROP FOREIGN KEY `fk_pessoa_funcionario_id`;
@@ -23,11 +25,8 @@ DROP COLUMN `funcionario_contato`,
 DROP COLUMN `funcionario_senha`;
 
 ALTER TABLE funcionario
-ADD COLUMN `funcionario_usuario` VARCHAR(45) not null,
-ADD COLUMN `funcionario_senha` VARCHAR(45) not null,
 ADD COLUMN `funcionario_departamento` VARCHAR(45) NOT NULL,
-ADD COLUMN `funcionario_salario` FLOAT NOT NULL,
-ADD COLUMN `funcionario_role` VARCHAR(45) not null;
+ADD COLUMN `funcionario_salario` FLOAT NOT NULL;
 
 ALTER TABLE funcionario
 ADD CONSTRAINT `fk_pessoa_funcionario_id` 

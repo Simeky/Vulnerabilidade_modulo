@@ -9,7 +9,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.vulnerabilidade.classes.Funcionario;
+import com.vulnerabilidade.classes.Users;
 
 @Service
 public class TokenService {
@@ -17,13 +17,13 @@ public class TokenService {
   @Value("${api.security.token.secret}")
   private String secret;
   
-  public String generate_token(Funcionario funcionario){
+  public String generate_token(Users user){
     try {
 
       Algorithm algorithm = Algorithm.HMAC256(secret);
       String token =  JWT.create()
                       .withIssuer("vulnerabilidade")
-                      .withSubject(funcionario.getFuncionario_usuario())
+                      .withSubject(user.getLogin())
                       .withExpiresAt(generate_expiration_date())
                       .sign(algorithm);
       

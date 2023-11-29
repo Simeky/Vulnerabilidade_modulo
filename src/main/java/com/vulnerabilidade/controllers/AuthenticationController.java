@@ -6,19 +6,21 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.vulnerabilidade.DTOS.request.FuncionarioRequestDTO;
-import com.vulnerabilidade.DTOS.response.FuncionarioResponseDTO;
+import com.vulnerabilidade.DTOS.request.AuthenticationRequestDTO;
 import com.vulnerabilidade.DTOS.response.LoginResponseDTO;
-import com.vulnerabilidade.classes.Funcionario;
+import com.vulnerabilidade.DTOS.response.UsersResponseDTO;
+import com.vulnerabilidade.classes.Users;
 import com.vulnerabilidade.infra.security.TokenService;
-import com.vulnerabilidade.repositorios.FuncionarioRepositorio;
+import com.vulnerabilidade.repositorios.UsersRepositorio;
 
 @RestController
 @RequestMapping("auth")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthenticationController {
 
   @Autowired
@@ -28,32 +30,35 @@ public class AuthenticationController {
   TokenService tokenService;
 
   @Autowired
-  private FuncionarioRepositorio repositorio;
-  
-  //login
+  private UsersRepositorio repositorio;
+
+  // login
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
   @PostMapping("login")
-  public ResponseEntity login(@RequestBody @Validated FuncionarioRequestDTO data){
+  public ResponseEntity login(@RequestBody @Validated AuthenticationRequestDTO data) {
 
-    var usuario_senha = new UsernamePasswordAuthenticationToken(data.funcionario_usuario(), data.funcionario_senha());
-    var auth = this.authentication_manager.authenticate(usuario_senha);
+    var senha = new UsernamePasswordAuthenticationToken(data.login(), data.senha());
+    var auth = this.authentication_manager.authenticate(senha);
 
-    var token = tokenService.generate_token((Funcionario)auth.getPrincipal());
+    var token = tokenService.generate_token((Users) auth.getPrincipal());
 
     return ResponseEntity.ok(new LoginResponseDTO(token));
 
   }
 
-  //Cadastro funcionario/usuário
-  @PostMapping("Add_funcionario")
-  public ResponseEntity cadastro(@RequestBody @Validated FuncionarioResponseDTO funcionario){
+  // Cadastro funcionario/usuário
+  @CrossOrigin(origins = "*", allowedHeaders = "*")
+  @PostMapping("Add_user")
+  public ResponseEntity cadastro(@RequestBody @Validated UsersResponseDTO user) {
 
-    if(this.repositorio.findByFuncionario_usuario(funcionario.funcionario_usuario()) != null) return ResponseEntity.badRequest().build();
 
-    String senha_encripitada = new BCryptPasswordEncoder().encode(funcionario.funcionario_senha());
-    Funcionario novo_usuario = new Funcionario(funcionario.funcionario_usuario(), senha_encripitada, funcionario.funcionario_role());
-    Funcionario funcionario_dados = new Funcionario(funcionario);
+    if (this.repositorio.findByLogin(user.login()) != null)
+      return ResponseEntity.badRequest().build();
 
-    this.repositorio.save(funcionario_dados);
+    String senha_encripitada = new BCryptPasswordEncoder().encode(user.senha());
+    Users novo_usuario = new Users(user.login(), senha_encripitada,
+        user.role());
+
     this.repositorio.save(novo_usuario);
 
     return ResponseEntity.ok().build();

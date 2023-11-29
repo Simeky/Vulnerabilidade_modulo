@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela de Apoios</title>
+  <style>
+    body {
+      background-color: #CAF0F8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #00B4D8;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #00B4D8;
+      color: #fff;
+    }
+
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
+      background-color: #0077B6;
+      color: #fff;
+      border: none;
+    }
+
+  </style>
+</head>
+<body>
+
+<table id="tabelaapoio">
+  <thead>
+    <tr>
+      <th>ID do Apoio</th>
+      <th>Nome do Apoio</th>
+      <th>Instituição</th>
+      <th>Descrição</th>
+      <th>Familias envolvidas</th>
+      <th>Data de Ínicio</th>
+      <th>Data de Término</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+
+
+<button onclick="tabela_familia()">Voltar à Tabela de Famílias</button>
+
+
+<script>
+
+
+  function tabela_familia() {
+    window.location.href = 'tabela_familia.html';
+  }
+
+  // Função para popular a tabela com os dados do db
+function populateTable() {
+  const tableBody = document.querySelector('#tabelaapoio tbody');
+
+  // Fazer solicitação AJAX para obter dados do servidor
+  fetch('http://localhost:8080/apoio')
+      .then(response => response.json())
+      .then(data => {
+          data.forEach(apoio => {
+              const row = tableBody.insertRow();
+              row.innerHTML = `
+                  <td>${apoio.apoio_id}</td>
+                  <td>${apoio.apoio_nome}</td>
+                  <td>${apoio.apoio_instituicao}</td>
+                  <td>${apoio.apoio_descricao}</td>
+                  <td>${apoio.apoio_familias_id}</td>
+                  <td>${apoio.apoio_data_inicio}</td>
+                  <td>${apoio.apoio_data_termino}</td>
+              `;
+          });
+      })
+      .catch(error => console.error('Erro ao obter dados do servidor:', error));
+}
+
+  // Chamar a função para popular a tabela ao carregar a página
+  window.onload = populateTable;
+</script>
+
+</body>
+</html>

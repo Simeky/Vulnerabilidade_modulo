@@ -1,16 +1,13 @@
 package com.vulnerabilidade.infra.security;
 
 import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.vulnerabilidade.repositorios.FuncionarioRepositorio;
-
+import com.vulnerabilidade.repositorios.UsersRepositorio;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,17 +20,17 @@ public class SecurityFilter extends OncePerRequestFilter{
   TokenService tokenService;
 
   @Autowired
-  FuncionarioRepositorio repositorio;
+  UsersRepositorio repositorio;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException{
       
     var token = this.recover_token(request);
     if(token != null){
-      var funcionario_usuario = tokenService.validate_token(token);
-      UserDetails funcionario = repositorio.findByFuncionario_usuario(funcionario_usuario);
+      var login = tokenService.validate_token(token);
+      UserDetails user = repositorio.findByLogin(login);
 
-      var authentication = new UsernamePasswordAuthenticationToken(funcionario, null, funcionario.getAuthorities());
+      var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
       SecurityContextHolder.getContext().setAuthentication(authentication);
 
     }

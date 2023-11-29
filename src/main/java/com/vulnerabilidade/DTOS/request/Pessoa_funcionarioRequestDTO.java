@@ -5,7 +5,6 @@ import java.sql.Date;
 import com.vulnerabilidade.classes.Funcionario;
 import com.vulnerabilidade.classes.Pessoa;
 import com.vulnerabilidade.enumeration.Genero;
-import com.vulnerabilidade.enumeration.Role;
 import com.vulnerabilidade.enumeration.Deficiencia_tipo;
 
 public record Pessoa_funcionarioRequestDTO( Long funcionario_id,               String pessoa_cpf, 
@@ -16,10 +15,9 @@ public record Pessoa_funcionarioRequestDTO( Long funcionario_id,               S
                                             String pessoa_cidade,              String pessoa_estado,
                                             String pessoa_nr_residencia,           
                                             Deficiencia_tipo pessoa_deficiencia_tipo,
-                                            String pessoa_deficiencia,         String funcionario_usuario,
-                                            String funcionario_senha,
+                                            String pessoa_deficiencia,
                                             String funcionario_departamento,   String funcionario_funcao,
-                                            Float funcionario_salario,         Role funcionario_role){
+                                            Float funcionario_salario){
 
   public Pessoa_funcionarioRequestDTO(Funcionario funcionario, Pessoa pessoa){
 
@@ -38,12 +36,9 @@ public record Pessoa_funcionarioRequestDTO( Long funcionario_id,               S
           pessoa.getPessoa_nr_residencia(), 
           pessoa.getPessoa_deficiencia_tipo(),
           pessoa.getPessoa_deficiencia(),
-          funcionario.getFuncionario_usuario(),
-          funcionario.getFuncionario_senha(),
           funcionario.getFuncionario_departamento(),
           funcionario.getFuncionario_funcao(),
-          funcionario.getFuncionario_salario(),
-          funcionario.getFuncionario_role());
+          funcionario.getFuncionario_salario());
 
   }
   
